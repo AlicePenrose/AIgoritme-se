@@ -1,11 +1,18 @@
-from smolagents import CodeAgent,DuckDuckGoSearchTool, HfApiModel,load_tool,tool
+from smolagents import CodeAgent,DuckDuckGoSearchTool,load_tool,tool
+from custom_smolagents.models.litellm_model import LitellmModel
 import datetime
 import requests
 import pytz
 import yaml
 from tools.final_answer import FinalAnswerTool
-
 from Gradio_UI import GradioUI
+
+model = LitellmModel(
+    model="",  
+    api_base="http://localhost:11434",  # Endereço do servidor do Ollama
+    max_tokens=2096,
+    temperature=0.5
+)
 
 # Below is an example of a tool that does nothing. Amaze us with your creativity !
 @tool
@@ -39,12 +46,12 @@ final_answer = FinalAnswerTool()
 # If the agent does not answer, the model is overloaded, please use another model or the following Hugging Face Endpoint that also contains qwen2.5 coder:
 # model_id='https://pflgm2locj2t89co.us-east-1.aws.endpoints.huggingface.cloud' 
 
-model = HfApiModel(
-max_tokens=2096,
-temperature=0.5,
-model_id='Qwen/Qwen2.5-Coder-32B-Instruct',# it is possible that this model may be overloaded
-custom_role_conversions=None,
-)
+# model = HfApiModel(
+# max_tokens=2096,
+# temperature=0.5,
+# model_id='Qwen/Qwen2.5-Coder-32B-Instruct',# it is possible that this model may be overloaded
+# custom_role_conversions=None,
+# )
 
 
 # Import tool from Hub
